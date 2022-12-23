@@ -8,6 +8,8 @@ import 'package:shop_app_3_flutter/widgets/user_product_item.dart';
 class UserProductsScreen extends StatelessWidget {
   static const routeName = '/user-products';
 
+  const UserProductsScreen({super.key});
+
   Future<void> _refreshProducts(BuildContext context) async {
     await Provider.of<Products>(context, listen: false)
         .fetchAndSetProducts(true);

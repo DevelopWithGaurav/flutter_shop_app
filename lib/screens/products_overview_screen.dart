@@ -11,6 +11,8 @@ import '../widgets/products_grid.dart';
 enum FilterOptions { favourites, all }
 
 class ProductsOverviewScreen extends StatefulWidget {
+  const ProductsOverviewScreen({super.key});
+
   @override
   State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
 }
@@ -24,18 +26,41 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   @override
   void initState() {
+    super.initState();
+
+    _loadData();
+  }
+
+  void _loadData() async {
     setState(() {
       _isLoading = true;
     });
 
-    Provider.of<Products>(context, listen: false)
-        .fetchAndSetProducts()
-        .then((value) {
-      setState(() {
-        _isLoading = false;
-      });
+    try {
+      await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+    } catch (error) {
+      _showErrorDialog('Http Error');
+    }
+
+    setState(() {
+      _isLoading = false;
     });
-    super.initState();
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('An error occurred!!'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Okay'),
+          ),
+        ],
+      ),
+    );
   }
 
   // @override

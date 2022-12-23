@@ -62,22 +62,25 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'MyShop',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            // primarySwatch: Colors.blue,
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: const Color.fromARGB(255, 109, 113, 46),
+            ),
             pageTransitionsTheme: PageTransitionsTheme(
               builders: {
-                TargetPlatform.android : CustomPageTransitionBuilder(),
+                TargetPlatform.android: CustomPageTransitionBuilder(),
                 TargetPlatform.iOS: CustomPageTransitionBuilder(),
               },
             ),
           ),
           home: auth.isAuth
-              ? ProductsOverviewScreen()
+              ? const ProductsOverviewScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
                   builder: (ctx, snapshot) =>
                       snapshot.connectionState == ConnectionState.waiting
                           ? const SplashScreen()
-                          : AuthScreen(),
+                          : const AuthScreen(),
                 ),
           routes: {
             ProductDetailScreen.routeName: (context) =>

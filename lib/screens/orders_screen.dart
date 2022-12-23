@@ -8,6 +8,8 @@ import '../widgets/order_item.dart';
 class OrdersScreen extends StatefulWidget {
   static const routeName = '/orders';
 
+  const OrdersScreen({super.key});
+
   @override
   State<OrdersScreen> createState() => _OrdersScreenState();
 }
